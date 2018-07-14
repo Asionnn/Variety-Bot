@@ -9,6 +9,7 @@ bot.on('message', (message) => {
     case "!roll":
 	var num = Math.floor(Math.random() * 100)+1;
 	message.channel.send('rolled ' + num);
+    message.delete(1000);
     break;
     case "!thinking":
         message.react('🤔');
@@ -56,6 +57,9 @@ bot.on('message', (message) => {
     break;
     case '!help':
         message.reply('Command List: \n!ping: replies with pong \n!roll: rolls a number between 1 and 100 \n!pokefusionrand: creates a random Pokemon Fusion');
+    break;
+    case "!pin":
+        message.pin();
     break;
     }//end switch
 
