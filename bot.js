@@ -20,7 +20,7 @@ bot.on('message', (message) => {
        message.channel.send(message.author.avatarURL);
     break;
     }//end switch
-  
+
     //start switch for pokemon section
     switch(message.content.substring(0,message.content.indexOf(' '))){
         case "!pokemon":
