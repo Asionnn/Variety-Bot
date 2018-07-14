@@ -13,7 +13,6 @@ bot.on('message', (message) => {
     case "!roll":
 	var num = Math.floor(Math.random() * 100)+1;
 	message.channel.send('rolled ' + num);
-    message.delete(1000);
     break;
     //links the user's avatar
     case "!avatar":
@@ -30,8 +29,8 @@ bot.on('message', (message) => {
         url: "https://github.com/Asionnn/my-Discord-bot",
         description: "I like eating dog.",
         fields: [{
-            name: "Creators",
-            value: "Neel - most of the work\n Collin - sat around"
+            name: "Contributors",
+            value: "Collin Li \nNeel Jain"
           },
           {
             name: "Rohan",
