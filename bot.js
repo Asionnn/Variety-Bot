@@ -17,4 +17,9 @@ bot.on('message', (message) => {
         message.reply('your dad');
     }
     break;
+  
+  
+    }//end switch
+
+  
 }); 
