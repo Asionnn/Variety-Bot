@@ -10,9 +10,6 @@ bot.on('message', (message) => {
 	var num = Math.floor(Math.random() * 100)+1;
 	message.channel.send('rolled ' + num);
     break;
-    case "!neel":
-        message.channel.send('your dad');
-    break;
     case "!thinking":
         message.react('🤔');
     break;
