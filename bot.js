@@ -16,7 +16,11 @@ bot.on('message', (message) => {
     break;
     //links the user's avatar
     case "!avatar":
-       message.channel.send(message.author.avatarURL);
+       //message.channel.send(message.author.avatarURL);
+       var embed = new Discord.RichEmbed()
+        .setImage(message.author.avatarURL);
+        message.channel.send({embed});
+       
     break;
     case "!embed":
     message.channel.send({embed: {
@@ -53,7 +57,7 @@ bot.on('message', (message) => {
     case "!pokegen":
     var num1 = Math.floor(Math.random() * 151)+1;
     var num2 = Math.floor(Math.random() * 151)+1;
-    const embed = new Discord.RichEmbed()
+    var embed = new Discord.RichEmbed()
         .setImage('http://images.alexonsager.net/pokemon/fused/' + num1 + '/' + num1 + '.' + num2 + '.png')
         message.channel.send({embed});
     break;
