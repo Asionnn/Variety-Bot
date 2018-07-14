@@ -17,11 +17,16 @@ bot.on('message', (message) => {
         message.react('🤔');
     break;
     case "!avatar":
-       message.channel.send('hey');
+       message.channel.send(message.author.avatarURL);
     break;
-  
-  
     }//end switch
+  
+    //start switch for pokemon section
+    switch(message.content.substring(0,message.content.indexOf(' '))){
+        case "!pokemon":
+            message.reply('pokemon');
+        break;
+    } //end switch for pokemon section
 
   
 }); 
