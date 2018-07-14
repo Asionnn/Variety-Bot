@@ -7,12 +7,12 @@ bot.on('message', (message) => {
     // It will listen for messages that will start with `!` 
     switch(message.content){
 	case "!ping":
-             message.reply('pong');
+        message.reply('pong');
 	break;
 	case "!roll":
 		var num = Math.floor(Math.random() * 100)+1;
 		message.reply('rolled ' + num);
-	break;
+    break;
     case "!neel":
         message.reply('your dad');
     }
