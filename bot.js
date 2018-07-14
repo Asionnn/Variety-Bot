@@ -15,7 +15,6 @@ bot.on('message', (message) => {
     break;
     case "!neel":
         message.reply('your dad');
-    }
     break;
   
   
