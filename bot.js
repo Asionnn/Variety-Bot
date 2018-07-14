@@ -1,12 +1,6 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 bot.login("NDY1OTUxMjc3NDg2OTY0NzU3.DiqoSg.7JqNcRu7kQixsEWAe896X34_mSE");
-/*
-bot.on('ready', function (evt) {
-    logger.info('Connected');
-    logger.info('Logged in as: ');
-    logger.info(bot.username + ' - (' + bot.id + ')');
-});*/
 
 bot.on('message', (message) => {
     // Our bot needs to know if it will execute a command
@@ -19,5 +13,8 @@ bot.on('message', (message) => {
 		var num = Math.floor(Math.random() * 100)+1;
 		message.reply('rolled ' + num);
 	break;
+    case "!neel":
+        message.reply('your dad');
     }
+    break;
 }); 
