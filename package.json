@@ -1,0 +1,10 @@
+{
+  "name": "greeter-bot",
+  "version": "1.0.0",
+  "description": "My own discord bot",
+  "main": "bot.js",
+  "author": "Collin Li",
+  "dependencies": {
+    "discord.js": "^11.3.2"
+  }
+}
