@@ -16,11 +16,9 @@ bot.on('message', (message) => {
     break;
     //links the user's avatar
     case "!avatar":
-       //message.channel.send(message.author.avatarURL);
        var embed = new Discord.RichEmbed()
         .setImage(message.author.avatarURL);
         message.channel.send({embed});
-       
     break;
     case "!embed":
     message.channel.send({embed: {
