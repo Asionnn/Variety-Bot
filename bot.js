@@ -3,6 +3,7 @@ const bot = new Discord.Client();
 bot.login("NDY1OTUxMjc3NDg2OTY0NzU3.DiqoSg.7JqNcRu7kQixsEWAe896X34_mSE");
 bot.on('ready', function() {
     bot.user.setUsername("Variety-Bot");
+    bot.user.setActivity("Fortnite: Electric Boogaloo");
 });
 
 bot.on('message', (message) => {
@@ -12,7 +13,7 @@ bot.on('message', (message) => {
     //rolls a number 1-100
     case "!roll":
 	var num = Math.floor(Math.random() * 100)+1;
-	message.channel.send('rolled ' + num);
+    message.channel.send('rolled ' + num);  
     break;
     //links the user's avatar
     case "!avatar":
@@ -64,7 +65,7 @@ bot.on('message', (message) => {
         message.reply('Command List: \n!ping: replies with pong \n!roll: rolls a number between 1 and 100 \n!pokefusionrand: creates a random Pokemon Fusion');
     break;
     }//end switch
-
+    
     //start switch for pokemon section
     switch(message.content.substring(0,message.content.indexOf(' '))){
         //generates a pokemon fusion using user inputs
