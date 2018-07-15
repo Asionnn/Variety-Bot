@@ -3,7 +3,7 @@ const bot = new Discord.Client();
 bot.login("NDY1OTUxMjc3NDg2OTY0NzU3.DiqoSg.7JqNcRu7kQixsEWAe896X34_mSE");
 bot.on('ready', function() {
     bot.user.setUsername("Variety-Bot");
-    bot.user.setActivity("Sticky Notes");
+    bot.user.setActivity("Fortnite: Electric Boogaloo");
 });
 
 bot.on('message', (message) => {
