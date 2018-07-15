@@ -8,10 +8,12 @@ bot.on('ready', function() {
 
 bot.on('message', (message) => {
     // Our bot needs to know if it will execute a command
-    // It will listen for messages that will start with `!` 
-    var token = "!";
+    // It will listen for messages that will start with the token variable 
+    var token = '!';
+    //checks to see if the first character is the token
     if(message.content.charAt(0) == token)
     {
+        //uses the command after the token to switch
         switch(message.content.substring(1)){
     //rolls a number 1-100
             case "roll":
@@ -67,9 +69,7 @@ bot.on('message', (message) => {
             case 'help':
         message.reply('Command List: \n!ping: replies with pong \n!roll: rolls a number between 1 and 100 \n!pokefusionrand: creates a random Pokemon Fusion');
     break;
-            case 'colon':
-                message.reply('sucks');
-            break;
+            
     }//end switch
     
     //start switch for pokemon section
@@ -81,6 +81,10 @@ bot.on('message', (message) => {
             var num2 = nums.substring(nums.indexOf(' ') + 1);
             message.reply('http://pokefusion.japeal.com/' + num1 + '/' + num2 + '/0');
         break;
+                case "token":
+                    token = message.content.charAt(message.content.indexOf(' ') + 1);
+                    message.reply('Token changed to \"' + token + '\"');
+                break;
     } //end switch for pokemon section
     }
   
