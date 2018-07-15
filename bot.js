@@ -3,25 +3,28 @@ const bot = new Discord.Client();
 bot.login("NDY1OTUxMjc3NDg2OTY0NzU3.DiqoSg.7JqNcRu7kQixsEWAe896X34_mSE");
 bot.on('ready', function() {
     bot.user.setUsername("Variety-Bot");
-    bot.user.setActivity("Fortnite: Electric Boogaloo");
+    bot.user.setActivity("Sticky Notes");
 });
 
 bot.on('message', (message) => {
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!` 
-    switch(message.content){
+    var token = "!";
+    if(message.content.charAt(0) == token)
+    {
+        switch(message.content.substring(1)){
     //rolls a number 1-100
-    case "!roll":
+            case "roll":
 	var num = Math.floor(Math.random() * 100)+1;
     message.channel.send('rolled ' + num);  
     break;
     //links the user's avatar
-    case "!avatar":
+            case "avatar":
        var embed = new Discord.RichEmbed()
         .setImage(message.author.avatarURL);
         message.channel.send({embed});
     break;
-    case "!embed":
+            case "embed":
     message.channel.send({embed: {
         color: 3447003,
         author: {
@@ -53,7 +56,7 @@ bot.on('message', (message) => {
     });
     break;
     //generates a pokemon fusion using 2 random numbers 1-100
-    case "!pokegen":
+            case "pokegen":
     var num1 = Math.floor(Math.random() * 151)+1;
     var num2 = Math.floor(Math.random() * 151)+1;
     var embed = new Discord.RichEmbed()
@@ -61,21 +64,24 @@ bot.on('message', (message) => {
         message.channel.send({embed});
     break;
     //sends help info 
-    case '!help':
+            case 'help':
         message.reply('Command List: \n!ping: replies with pong \n!roll: rolls a number between 1 and 100 \n!pokefusionrand: creates a random Pokemon Fusion');
     break;
+            case 'colon':
+                message.reply('sucks');
+            break;
     }//end switch
     
     //start switch for pokemon section
-    switch(message.content.substring(0,message.content.indexOf(' '))){
+            switch(message.content.substring(1,message.content.indexOf(' '))){
         //generates a pokemon fusion using user inputs
-        case "!pfuse":
+                case "pfuse":
             var nums = message.content.substring(message.content.indexOf(' ') + 1);
             var num1 = nums.substring(0, nums.indexOf(' '));
             var num2 = nums.substring(nums.indexOf(' ') + 1);
             message.reply('http://pokefusion.japeal.com/' + num1 + '/' + num2 + '/0');
         break;
     } //end switch for pokemon section
-
+    }
   
 }); 
