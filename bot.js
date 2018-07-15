@@ -64,6 +64,9 @@ bot.on('message', (message) => {
     case '!help':
         message.reply('Command List: \n!ping: replies with pong \n!roll: rolls a number between 1 and 100 \n!pokefusionrand: creates a random Pokemon Fusion');
     break;
+    case '!colon':
+        message.reply('sucks');
+    break;
     }//end switch
     
     //start switch for pokemon section
