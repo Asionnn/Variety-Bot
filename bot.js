@@ -3,13 +3,15 @@ const bot = new Discord.Client();
 bot.login("NDY1OTUxMjc3NDg2OTY0NzU3.DiqoSg.7JqNcRu7kQixsEWAe896X34_mSE");
 bot.on('ready', function() {
     bot.user.setUsername("Variety-Bot");
-    bot.user.setActivity("Fortnite: Electric Boogaloo");
+    bot.user.setActivity("Fortnite");
 });
+
+var token = '!';
 
 bot.on('message', (message) => {
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with the token variable 
-    var token = '!';
+    
     //checks to see if the first character is the token
     if(message.content.charAt(0) == token)
     {
@@ -69,7 +71,6 @@ bot.on('message', (message) => {
             case 'help':
         message.reply('Command List: \n!ping: replies with pong \n!roll: rolls a number between 1 and 100 \n!pokefusionrand: creates a random Pokemon Fusion');
     break;
-            
     }//end switch
     
     //start switch for pokemon section
@@ -83,7 +84,7 @@ bot.on('message', (message) => {
         break;
                 case "token":
                     token = message.content.charAt(message.content.indexOf(' ') + 1);
-                    message.reply('Token changed to \"' + token + '\"');
+            message.channel.send('Token changed to \"' + token + '\"');
                 break;
     } //end switch for pokemon section
     }
