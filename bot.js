@@ -75,7 +75,7 @@ bot.on('message', (message) => {
                 description: "List of commands",
                 fields: [{
                    name: "General",
-                   value:"!roll - rolls a number from 1-100\n!avatar - links your avatar\n!token <symbol> - changes the token to the given symbol\n",
+                   value:"!roll - rolls a number from 1-100\n!avatar - links your avatar\n!token <symbol> - changes the token to the given symbol\n!neel - special message for neel\n!rohan - special message for rohan\n!alex - special message for alex",
                 },
                 {
                     name: "Pokemon section",
@@ -91,6 +91,30 @@ bot.on('message', (message) => {
             }); 
             message.delete(100);
             break;   
+            case 'neel':
+                if(message.author.username === 'Lugh'){
+                    message.author.send("You're trash at osu! xDDDD");
+                }
+                else{
+                    message.channel.send("This command can only be used by Neel Jain!!!");
+                }
+            break;
+            case 'rohan':
+                if(message.author.username === 'IcySpirits'){
+                    message.author.send("You're a fucking bot");
+                }
+                else{
+                    message.channel.send("This command can only be used by Rohan Reddy!!!");
+                }
+            break;
+            case 'alex':
+                if(message.author.username === 'Silance'){
+                    message.author.send("Your shotgun aim is trash");
+                }
+                else{
+                    message.channel.send("This command can only be used by Alex Rich!!!");
+                }
+            break;
             
     
     }//end switch
