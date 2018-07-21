@@ -7,7 +7,6 @@ bot.on('ready', function() {
 });
 var token = '!';
 bot.on('message', (message) => {
-
     //checks to see if the first character is the token
     if(message.content.charAt(0) == token)
     {
@@ -65,9 +64,35 @@ bot.on('message', (message) => {
             break;
             //sends help info 
             case 'help':
-                message.reply('Command List: \n!ping: replies with pong \n!roll: rolls a number between 1 and 100 \n!pokefusionrand: creates a random Pokemon Fusion');
+            message.author.send({embed: {
+                color: 3447003,
+                author: {
+                name: message.author.username,
+                icon_url: message.author.avatarURL
+                },
+                title: "Asion's Variety Bot",
+                url: "https://github.com/Asionnn/my-Discord-bot",
+                description: "List of commands",
+                fields: [{
+                   name: "General",
+                   value:"!roll - rolls a number from 1-100\n!avatar - links your avatar\n!token <symbol> - changes the token to the given symbol\n",
+                },
+                {
+                    name: "Pokemon section",
+                    value : "!pokegen - generates a random pokemon fusion from the first 151 pokemon\n!pfuse <number> <number> - generates a fusion given 2 numbers from the first 493 pokemon",
+                }
+                ],
+                timestamp: new Date(),
+                footer: {
+                icon_url: message.author.avatarURL,
+                text: "© Colon"
+                }
+            }
+            }); 
+            message.delete(100);
             break;   
             
+    
     }//end switch
     
     //start switch for pokemon section
