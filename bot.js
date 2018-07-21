@@ -7,6 +7,7 @@ bot.on('ready', function() {
 });
 var token = '!';
 bot.on('message', (message) => {
+
     //checks to see if the first character is the token
     if(message.content.charAt(0) == token)
     {
@@ -66,8 +67,8 @@ bot.on('message', (message) => {
             case 'help':
                 message.reply('Command List: \n!ping: replies with pong \n!roll: rolls a number between 1 and 100 \n!pokefusionrand: creates a random Pokemon Fusion');
             break;   
-            case 'token':
-                message.channel.send('The current token is ' + '\'' + token + '\'');
+            case 'test':
+                message.channel.send("what");
             break;
     }//end switch
     
