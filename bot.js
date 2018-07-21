@@ -7,9 +7,6 @@ bot.on('ready', function() {
 });
 var token = '!';
 bot.on('message', (message) => {
-    // Our bot needs to know if it will execute a command
-    // It will listen for messages that will start with the token variable 
-    
     //checks to see if the first character is the token
     if(message.content.charAt(0) == token)
     {
