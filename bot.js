@@ -75,7 +75,7 @@ bot.on('message', (message) => {
                 description: "List of commands",
                 fields: [{
                    name: "General",
-                   value:"!roll - rolls a number from 1-100\n!avatar - links your avatar\n!token <symbol> - changes the token to the given symbol\n!neel - special message for neel\n!rohan - special message for rohan\n!alex - special message for alex",
+                   value:"!roll - rolls a number from 1-100\n!avatar - links your avatar\n!token <symbol> - changes the token to the given symbol\n!neel - special message for neel\n!rohan - special message for rohan\n!alex - special message for alex\n!adam - special message for Adam Rivera",
                 },
                 {
                     name: "Pokemon section",
