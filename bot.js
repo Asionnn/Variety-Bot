@@ -122,11 +122,9 @@ bot.on('message', (message) => {
 		else{
 		    message.channel.send("This command can only be used by Adam Rivera!!!");
 		}
-            
-    
     }//end switch
     
-    //start switch for pokemon section
+    //start switch for commands with spaces
     switch(message.content.substring(1,message.content.indexOf(' '))){
         //generates a pokemon fusion using user inputs
         case "pfuse":
@@ -139,7 +137,7 @@ bot.on('message', (message) => {
             token = message.content.charAt(message.content.indexOf(' ') + 1);
             message.channel.send('Token changed to \"' + token + '\"');
         break;
-    } //end switch for pokemon section
+    } //end switch for switch spaces
     }
   
 }); 
