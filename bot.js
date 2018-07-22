@@ -100,7 +100,7 @@ bot.on('message', (message) => {
                 }
             break;
             case 'rohan':
-                if(message.author.username === 'IcySpirits'){
+                if(message.author.username === 'Icy'){
                     message.author.send("You're a fucking bot");
                 }
                 else{
@@ -115,6 +115,13 @@ bot.on('message', (message) => {
                     message.channel.send("This command can only be used by Alex Rich!!!");
                 }
             break;
+	    case 'adam':
+		if(message.author.username === 'Runevera'){
+		    message.author.send("GOOD LUCK CHARM");
+		}
+		else{
+		    message.channel.send("This command can only be used by Adam Rivera!!!");
+		}
             
     
     }//end switch
