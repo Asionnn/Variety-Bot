@@ -117,7 +117,7 @@ bot.on('message', (message) => {
             break;
 	    case 'adam':
 		if(message.author.username === 'Runevera'){
-		    message.author.send("GOOD LUCK CHARM");
+		    message.author.send("9 MINIES!!!");
 		}
 		else{
 		    message.channel.send("This command can only be used by Adam Rivera!!!");
