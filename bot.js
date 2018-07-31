@@ -129,7 +129,9 @@ bot.on('message', (message) => {
             break;
             case 'osupic':
                 var num = Math.floor(Math.random() * 1485614)+10000000; 
-                message.channel.send("https://osu.ppy.sh/ss/" + num);
+                var embed = new Discord.RichEmbed()
+                .setImage("https://osu.ppy.sh/ss/" + num);
+                message.channel.send({embed});
     }//end switch
 
     //start switch for commands with spaces
