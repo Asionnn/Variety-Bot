@@ -5,10 +5,10 @@ bot.on('ready', function() {
     bot.user.setUsername("Variety-Bot");
     bot.user.setActivity("Fortnite");
 });
-var token = '!';
+var prefix = '!';
 bot.on('message', (message) => {
     //checks to see if the first character is the token
-    if(message.content.charAt(0) == token)
+    if(message.content.charAt(0) == prefix)
     {
         //uses the command after the token to switch
         switch(message.content.substring(1)){
@@ -90,7 +90,7 @@ bot.on('message', (message) => {
             }
             }); 
             message.delete(100);
-            break;   
+            break;
             case 'neel':
                 if(message.author.username === 'Lugh'){
                     message.author.send("You're trash at osu! xDDDD");
@@ -121,9 +121,9 @@ bot.on('message', (message) => {
 		}
 		else{
 		    message.channel.send("This command can only be used by Adam Rivera!!!");
-		}
+        }  
     }//end switch
-    
+
     //start switch for commands with spaces
     switch(message.content.substring(1,message.content.indexOf(' '))){
         //generates a pokemon fusion using user inputs
@@ -131,11 +131,29 @@ bot.on('message', (message) => {
             var nums = message.content.substring(message.content.indexOf(' ') + 1);
             var num1 = nums.substring(0, nums.indexOf(' '));
             var num2 = nums.substring(nums.indexOf(' ') + 1);
-            message.reply('http://pokefusion.japeal.com/' + num1 + '/' + num2 + '/0');
+            var s1 = new String(num1);
+            var s2 = new String(num2);
+            //makes sure user inputs numbers
+            if(s1.length != 0 && s2.length != 0 && s1.charAt(0) <= 57 && s2.charAt(0) <= 57){
+                message.reply('http://pokefusion.japeal.com/' + num1 + '/' + num2 + '/0');
+            }
+            else{
+                message.channel.send("Please provide 2 numbers!!!");
+            }
         break;
-        case "token":
-            token = message.content.charAt(message.content.indexOf(' ') + 1);
-            message.channel.send('Token changed to \"' + token + '\"');
+        case "prefix": //prefix is limited to 1 char for now
+            var input = message.content.substring(message.content.indexOf(' ') + 1);
+            var s = new String(input);
+            if(s.length == 1){
+                message.channel.send('prefix changed to \"' + input + '\"');
+                prefix = input;
+            }
+            else if(s.length == 0){
+                message.channel.send("You can not have an empty prefix!");
+            }
+            else{
+                message.channel.send("Prefixes are limited to one character!\n try again!");
+            }
         break;
     } //end switch for switch spaces
     }
