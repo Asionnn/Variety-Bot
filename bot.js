@@ -75,11 +75,15 @@ bot.on('message', (message) => {
                 description: "List of commands",
                 fields: [{
                    name: "General",
-                   value:"!roll - rolls a number from 1-100\n!avatar - links your avatar\n!token <symbol> - changes the token to the given symbol\n!neel - special message for neel\n!rohan - special message for rohan\n!alex - special message for alex\n!adam - special message for adam",
+                   value:"!roll - rolls a number from 1-100\n!avatar - links your avatar\n!token <symbol> - changes the token to the given symbol\n!neel - special message for neel\n!rohan - special message for rohan\n!alex - special message for alex\n!adam - special message for adam\n",
                 },
                 {
                     name: "Pokemon section",
-                    value : "!pokegen - generates a random pokemon fusion from the first 151 pokemon\n!pfuse <number> <number> - generates a fusion given 2 numbers from the first 493 pokemon",
+                    value: "!pokegen - generates a random pokemon fusion from the first 151 pokemon\n!pfuse <number> <number> - generates a fusion given 2 numbers from the first 493 pokemon",
+                },
+                {
+                    name: "osu! section",
+                    value: "!osupic - displays a random user uploaded osu! screenshot\n",
                 }
                 ],
                 timestamp: new Date(),
@@ -115,13 +119,17 @@ bot.on('message', (message) => {
                     message.channel.send("This command can only be used by Alex Rich!!!");
                 }
             break;
-	    case 'adam':
-		if(message.author.username === 'Runevera'){
-		    message.author.send("9 MINIES!!!");
-		}
-		else{
-		    message.channel.send("This command can only be used by Adam Rivera!!!");
-        }  
+	        case 'adam':
+		        if(message.author.username === 'Runevera'){
+		             message.author.send("9 MINIES!!!");
+		        }
+		        else{
+		             message.channel.send("This command can only be used by Adam Rivera!!!");
+                }  
+            break;
+            case 'osupic':
+                var num = Math.floor(Math.random() * 1485614)+10000000; 
+                message.channel.send("https://osu.ppy.sh/ss/" + num);
     }//end switch
 
     //start switch for commands with spaces
