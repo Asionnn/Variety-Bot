@@ -55,7 +55,7 @@ bot.on('message', (message) => {
                 });
             break;
             //generates a pokemon fusion using 2 random numbers 1-100
-            case "pokegen":
+            case "pgen":
                 var num1 = Math.floor(Math.random() * 151)+1;
                 var num2 = Math.floor(Math.random() * 151)+1;
                 var embed = new Discord.RichEmbed()
@@ -75,7 +75,7 @@ bot.on('message', (message) => {
                 description: "List of commands",
                 fields: [{
                    name: "General",
-                   value:"!roll - rolls a number from 1-100\n!avatar - links your avatar\n!token <symbol> - changes the token to the given symbol\n!neel - special message for neel\n!rohan - special message for rohan\n!alex - special message for alex\n!adam - special message for Adam Rivera",
+                   value:"!roll - rolls a number from 1-100\n!avatar - links your avatar\n!token <symbol> - changes the token to the given symbol\n!neel - special message for neel\n!rohan - special message for rohan\n!alex - special message for alex\n!adam - special message for adam",
                 },
                 {
                     name: "Pokemon section",
