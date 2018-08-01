@@ -134,6 +134,7 @@ bot.on('message', (message) => {
                 var embed = new Discord.RichEmbed()
                 .setImage("https://osu.ppy.sh/ss/" + num);
                 message.channel.send({embed});
+            break;
     }//end switch
 
     //start switch for commands with spaces
@@ -167,6 +168,12 @@ bot.on('message', (message) => {
                 message.channel.send("Prefixes are limited to one character!\n try again!");
             }
         break;
+        case 'osu-best':
+            //osu.setMode(osuapi.Modes.osu);
+            //var osuUser = message.content.substring(message.content.indexOf(' ') + 1);
+            //var scores = osu.getUserBest(osuUser);
+        break;
+
     } //end switch for switch spaces
     }
   
