@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
-const tokens = require('/auth.json');
+const token = require('./auth.json');
 bot.on('ready', function() {
     bot.user.setUsername("Variety-Bot");
     bot.user.setActivity("Fortnite");
@@ -169,4 +169,4 @@ bot.on('message', (message) => {
     }
   
 });
-bot.login(auth.token); 
+bot.login(token.bot_token); 
