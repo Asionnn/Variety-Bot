@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const token = require('./auth.json');
+var osuapi = require('osu-api');
+var osu = new osuapi.Api(token.osu_api);
 bot.on('ready', function() {
     bot.user.setUsername("Variety-Bot");
     bot.user.setActivity("Fortnite");
