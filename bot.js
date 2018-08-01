@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
-bot.login("NDY1OTUxMjc3NDg2OTY0NzU3.DiqoSg.7JqNcRu7kQixsEWAe896X34_mSE");
+const tokens = require('/auth.json');
 bot.on('ready', function() {
     bot.user.setUsername("Variety-Bot");
     bot.user.setActivity("Fortnite");
@@ -168,4 +168,5 @@ bot.on('message', (message) => {
     } //end switch for switch spaces
     }
   
-}); 
+});
+bot.login(auth.token); 
