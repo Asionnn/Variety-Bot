@@ -6,6 +6,6 @@
   "author": "Collin Li",
   "dependencies": {
     "discord.js": "^11.3.2",
-    "osu-api": "0.0.3"
+    "nodesu": "^0.6.4"
   }
 }
