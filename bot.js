@@ -1,4 +1,3 @@
-'use strict';
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const token = require('./auth.json');
@@ -173,9 +172,7 @@ bot.on('message', (message) => {
         break;
         case 'osu':
             var osuUser = message.content.substring(message.content.indexOf(' ') + 1);
-            var what = api.user.get(osuUser); 
-            message.channel.send(what.id);
-                
+            var what = api.user.get(osuUser).then(console.log);       
         break;
 
     } //end switch for switch spaces
