@@ -175,6 +175,7 @@ bot.on('message', (message) => {
         case 'osu':
             var osuUser = message.content.substring(message.content.indexOf(' ') + 1);
             api.user.get(osuUser).then(user => {
+                
                 message.channel.send(user.accuracy.toFixed(2));
             })
     } //end switch for switch spaces
