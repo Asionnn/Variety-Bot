@@ -1,8 +1,10 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const token = require('./auth.json');
-const osu = require('nodesu');
-const api = new osu.Client(token.osu_api);
+const Nodesu = require('nodesu');
+const api = new Nodesu.Client(token.osu_api, {
+    parseData: true
+ });
 bot.on('ready', function() {
     bot.user.setUsername("Variety-Bot");
     bot.user.setActivity("Fortnite");
@@ -168,11 +170,10 @@ bot.on('message', (message) => {
                 message.channel.send("Prefixes are limited to one character!\n try again!");
             }
         break;
-        case 'osu-best':
-            osu.setMode(osuapi.Modes.osu);
+        case 'osu':
             var osuUser = message.content.substring(message.content.indexOf(' ') + 1);
-            var scores = osu.getUserBest(osuUser);
-            
+            var obj = api.user.get(osuUser);
+            message.channel.send();        
         break;
 
     } //end switch for switch spaces

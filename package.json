@@ -6,6 +6,6 @@
   "author": "Collin Li",
   "dependencies": {
     "discord.js": "^11.3.2",
-    "nodesu": "^0.6.4"
+    "nodesu": "github:nicholastay/nodesu"
   }
 }
