@@ -1,10 +1,18 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const token = require('./auth.json');
+const osu = require('node-osu');
+var osuApi = new osu.Api(token.osu_api, {
+    // baseUrl: sets the base api url (default: https://osu.ppy.sh/api)
+    notFoundAsError: true, // Reject on not found instead of returning nothing. (default: true)
+    completeScores: false // When fetching scores also return the beatmap (default: false)
+});
 const Nodesu = require('nodesu');
 const api = new Nodesu.Client(token.osu_api, {
     parseData: true
  });
+
+
 bot.on('ready', function() {
     bot.user.setUsername("Variety-Bot");
     bot.user.setActivity("Fortnite");
@@ -172,7 +180,9 @@ bot.on('message', (message) => {
         break;
         case 'osu':
             var osuUser = message.content.substring(message.content.indexOf(' ') + 1);
-            api.user.get(osuUser).then(console.log);
+            api.user.get(osuUser).then(oUser => {
+                message.channel.send(oUser.accuracy.toFixed(2));
+            })
     } //end switch for switch spaces
     }
   
