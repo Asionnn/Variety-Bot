@@ -5,7 +5,9 @@
   "main": "bot.js",
   "author": "Collin Li",
   "dependencies": {
-    "discord.js": "^11.3.2",
+    "discord.js": "^11.3.2"
+  },
+  "devDependencies": {
     "nodesu": "github:nicholastay/nodesu"
   }
 }
