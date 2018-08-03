@@ -1,5 +1,5 @@
 {
-  "name": "VarietyBot",
+  "name": "variety-bot",
   "version": "1.0.0",
   "description": "My own discord bot",
   "main": "bot.js",
