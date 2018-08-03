@@ -172,8 +172,9 @@ bot.on('message', (message) => {
         break;
         case 'osu':
             var osuUser = message.content.substring(message.content.indexOf(' ') + 1);
-            var obj = api.user.get(osuUser);
-            message.channel.send();        
+            var what = api.user.get(osuUser); 
+            message.channel.send(what.id);
+                
         break;
 
     } //end switch for switch spaces
