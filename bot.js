@@ -18,11 +18,6 @@ bot.on('message', (message) => {
     {
         //uses the command after the token to switch
         switch(message.content.substring(1)){
-            //rolls a number 1-100
-            case "roll":
-                var num = Math.floor(Math.random() * 100)+1;
-                message.channel.send('rolled ' + num);  
-            break;
             //links the user's avatar
             case "avatar":
                 var embed = new Discord.RichEmbed()
@@ -50,15 +45,15 @@ bot.on('message', (message) => {
                 description: "List of commands",
                 fields: [{
                    name: "General",
-                   value:"!roll - rolls a number from 1-100\n!avatar - links your avatar\n!token <symbol> - changes the token to the given symbol\n!neel - special message for neel\n!rohan - special message for rohan\n!alex - special message for alex\n!adam - special message for adam\n",
+                   value:"!roll <n> - rolls a number from 1-n\n!avatar - links your avatar\n!prefix <character> - changes the prefix to the input!\n!neel - special message for neel\n!rohan - special message for rohan\n!alex - special message for alex\n!adam - special message for adam\n",
                 },
                 {
                     name: "Pokemon section",
-                    value: "!pokegen - generates a random pokemon fusion from the first 151 pokemon\n!pfuse <number> <number> - generates a fusion given 2 numbers from the first 493 pokemon",
+                    value: "!pgen - generates a random pokemon fusion from the first 151 pokemon\n!pfuse <n> <n> - generates a fusion given 2 numbers from the first 493 pokemon",
                 },
                 {
                     name: "osu! section",
-                    value: "!osupic - displays a random user uploaded osu! screenshot\n",
+                    value: "!osupic - displays a random user uploaded osu! screenshot" + "\n!osu <user> - displays the stats of the user!",
                 }
                 ],
                 timestamp: new Date(),
@@ -75,7 +70,7 @@ bot.on('message', (message) => {
                     message.author.send("You're trash at osu! xDDDD");
                 }
                 else{
-                    message.channel.send("This command can only be used by Neel Jain!!!");
+                    message.channel.send("```This command can only be used by Neel Jain!!!```");
                 }
             break;
             case 'rohan':
@@ -83,7 +78,7 @@ bot.on('message', (message) => {
                     message.author.send("You're a fucking bot");
                 }
                 else{
-                    message.channel.send("This command can only be used by Rohan Reddy!!!");
+                    message.channel.send("```This command can only be used by Rohan Reddy!!!```");
                 }
             break;
             case 'alex':
@@ -91,7 +86,7 @@ bot.on('message', (message) => {
                     message.author.send("Your shotgun aim is trash");
                 }
                 else{
-                    message.channel.send("This command can only be used by Alex Rich!!!");
+                    message.channel.send("```This command can only be used by Alex Rich!!!```");
                 }
             break;
 	        case 'adam':
@@ -99,7 +94,7 @@ bot.on('message', (message) => {
 		             message.author.send("9 MINIES!!!");
 		        }
 		        else{
-		             message.channel.send("This command can only be used by Adam Rivera!!!");
+		             message.channel.send("```This command can only be used by Adam Rivera!!!```");
                 }  
             break;
             case 'osupic':
@@ -124,21 +119,21 @@ bot.on('message', (message) => {
                 message.reply('http://pokefusion.japeal.com/' + num1 + '/' + num2 + '/0');
             }
             else{
-                message.channel.send("Please provide 2 numbers!!!");
+                message.channel.send("```Please provide 2 numbers!!!```");
             }
         break;
         case "prefix": //prefix is limited to 1 char for now
             var input = message.content.substring(message.content.indexOf(' ') + 1);
             var s = new String(input);
             if(s.length == 1){
-                message.channel.send('prefix changed to \"' + input + '\"');
+                message.channel.send('```prefix changed to \"' + input + '\"```');
                 prefix = input;
             }
             else if(s.length == 0){
-                message.channel.send("You can not have an empty prefix!");
+                message.channel.send("```You can not have an empty prefix!```");
             }
             else{
-                message.channel.send("Prefixes are limited to one character!\n try again!");
+                message.channel.send("```Prefixes are limited to one character!\n try again!```");
             }
         break;
         //displays stats for the osu user
@@ -178,6 +173,19 @@ bot.on('message', (message) => {
             else{
                 message.channel.send("```usernames must be 15 characters or less!```")
             }
+        break;
+        //rolls number between 1-input
+        case 'roll':
+            var string = message.content.substring(message.content.indexOf(' ') + 1);
+            var num = parseInt(string);
+            if(num){
+                var int = Math.floor(Math.random() * num) + 1;
+                message.channel.send("```Rolled " + int + "!```");
+            }
+            else{
+                message.channel.send("```Enter a number!```");
+            }
+        break;
     } //end switch for switch spaces
  }
   
