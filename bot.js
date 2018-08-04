@@ -175,11 +175,32 @@ bot.on('message', (message) => {
         case 'osu':
             var osuUser = message.content.substring(message.content.indexOf(' ') + 1);
             api.user.get(osuUser).then(user => {
-                
-                message.channel.send(user.accuracy.toFixed(2));
-            })
+                message.channel.send({embed: {
+                    color: 0xff00ff,
+                    author: {
+                    name: user.name + "'s stats [" + user.country + "]",
+                    icon_url: "https://puu.sh/B8elv/a46e26ad29.png"
+                    },
+                    //title: user.name + "'s stats",
+                    url: "https://osu.ppy.sh/users/" + user.name,
+                    //description: "Stats",
+                    fields: [{
+                       name: "Profile",
+                       value: "Rank: #" + user.ppRank + "\nAccuracy: " + user.accuracy.toFixed(2) + "%\nPlaycount: " + user.playcount,
+                    },
+                    {
+                        name: "Score & Ranks",
+                        value: "Total score: " + user.totalScore + "\nRanked score: " + user.rankedScore + "\nSS-ranks: " + user.countRankSS + "\nS-ranks: " + user.countRankS + "\nA-ranks: " + user.countRankA,
+                    }
+                    ],
+                    timestamp: new Date(),
+                   
+                }
+                }); 
+
+            });
     } //end switch for switch spaces
-    }
+ }
   
 });
 bot.login(token.bot_token); 
