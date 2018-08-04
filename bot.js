@@ -29,37 +29,6 @@ bot.on('message', (message) => {
                 .setImage(message.author.avatarURL);
                 message.channel.send({embed});
             break;
-            case "embed":
-                message.channel.send({embed: {
-                    color: 3447003,
-                    author: {
-                    name: message.author.username,
-                    icon_url: message.author.avatarURL
-                    },
-                    title: "Asion's Variety Bot",
-                    url: "https://github.com/Asionnn/my-Discord-bot",
-                    description: "I like eating dog.",
-                    fields: [{
-                        name: "Contributors",
-                        value: "Collin Li \nNeel Jain"
-                    },
-                    {
-                        name: "Rohan",
-                        value: "sucks pp"
-                    },
-                    {
-                        name: "osu!",
-                        value: "kill me"
-                    }
-                    ],
-                    timestamp: new Date(),
-                    footer: {
-                    icon_url: message.author.avatarURL,
-                    text: "© Colon"
-                    }
-                }
-                });
-            break;
             //generates a pokemon fusion using 2 random numbers 1-100
             case "pgen":
                 var num1 = Math.floor(Math.random() * 151)+1;
@@ -172,33 +141,44 @@ bot.on('message', (message) => {
                 message.channel.send("Prefixes are limited to one character!\n try again!");
             }
         break;
+        //displays stats for the osu user
         case 'osu':
             var osuUser = message.content.substring(message.content.indexOf(' ') + 1);
-            api.user.get(osuUser).then(user => {
-                message.channel.send({embed: {
-                    color: 0xff00ff,
-                    author: {
-                    name: user.name + "'s stats [" + user.country + "]",
-                    icon_url: "https://puu.sh/B8elv/a46e26ad29.png"
-                    },
-                    //title: user.name + "'s stats",
-                    url: "https://osu.ppy.sh/users/" + user.name,
-                    //description: "Stats",
-                    fields: [{
-                       name: "Profile",
-                       value: "Rank: #" + user.ppRank + "\nAccuracy: " + user.accuracy.toFixed(2) + "%\nPlaycount: " + user.playcount,
-                    },
-                    {
-                        name: "Score & Ranks",
-                        value: "Total score: " + user.totalScore + "\nRanked score: " + user.rankedScore + "\nSS-ranks: " + user.countRankSS + "\nS-ranks: " + user.countRankS + "\nA-ranks: " + user.countRankA,
+            var osuString = new String(osuUser);
+            if(osuString.length < 16){
+                api.user.get(osuUser).then(user => {
+                if(user){
+                    message.channel.send({embed: {
+                        color: 0xff00ff,
+                        author: {
+                        name: user.name + "'s stats [" + user.country + "]",
+                        icon_url: "https://puu.sh/B8elv/a46e26ad29.png"
+                        },
+                        //title: user.name + "'s stats",
+                        url: "https://osu.ppy.sh/users/" + user.name,
+                        //description: "Stats",
+                        fields: [{
+                        name: "Profile",
+                        value: "Rank: #" + user.ppRank + "\nPP: " + user.pp + "\nAccuracy: " + user.accuracy.toFixed(2) + "%\nPlaycount: " + user.playcount,
+                        },
+                        {
+                            name: "Score & Ranks",
+                            value: "Total score: " + user.totalScore + "\nRanked score: " + user.rankedScore + "\nSS-ranks: " + user.countRankSS + "\nS-ranks: " + user.countRankS + "\nA-ranks: " + user.countRankA,
+                        }
+                        ],
+                        timestamp: new Date(),
+                    
                     }
-                    ],
-                    timestamp: new Date(),
-                   
+                    }); 
                 }
-                }); 
-
-            });
+                else{
+                    message.channel.send("```User does not exist!```");
+                }
+                });
+            }
+            else{
+                message.channel.send("```usernames must be 15 characters or less!```")
+            }
     } //end switch for switch spaces
  }
   
