@@ -158,15 +158,14 @@ bot.on('message', (message) => {
                         url: "https://osu.ppy.sh/users/" + user.name,
                         //description: "Stats",
                         fields: [{
-                        name: "Profile",
-                        value: "Rank: #" + user.ppRank + "\nPP: " + user.pp + "\nAccuracy: " + user.accuracy.toFixed(2) + "%\nPlaycount: " + user.playcount,
+                            name: "Profile",
+                            value: "Rank: #" + user.ppRank.toLocaleString() + "\nPP: " + user.pp.toLocaleString() + "\nAccuracy: " + user.accuracy.toFixed(2) + "%\nPlaycount: " + user.playcount.toLocaleString(),
                         },
                         {
                             name: "Score & Ranks",
-                            value: "Total score: " + user.totalScore + "\nRanked score: " + user.rankedScore + "\nSS-ranks: " + user.countRankSS + "\nS-ranks: " + user.countRankS + "\nA-ranks: " + user.countRankA,
+                            value: "Total score: " + user.totalScore.toLocaleString() + "\nRanked score: " + user.rankedScore.toLocaleString() + "\nSS-ranks: " + user.countRankSS.toLocaleString() + "\nS-ranks: " + user.countRankS.toLocaleString() + "\nA-ranks: " + user.countRankA.toLocaleString(),
                         }
                         ],
-                        timestamp: new Date(),
                     
                     }
                     }); 
