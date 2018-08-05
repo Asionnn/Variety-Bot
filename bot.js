@@ -228,14 +228,23 @@ bot.on('message', (message) => {
             var osuUser = message.content.substring(message.content.indexOf(' ') + 1);
             var bestScores = [];
             api.user.getBest(osuUser).then(user => {
-                for(var x = 0; x < 5; x++){
+                for(var x = 0; x < 4; x++){
                     api.beatmaps.getByBeatmapId(user[x].beatmapId).then(map => {
                         bestScores.push(map[0].title);
-                        message.channel.send(bestScores.length);
+                        //message.channel.send(bestScores[0]);
                     });
                 }
+                for(var x = 0;x < 4; x++){
+                    if(bestScores[x]){
+                        message.channel.send("defined");
+                    }
+                    else{
+                        message.channel.send("undefined");
+                    }
+                }
+                        
+                bestScores = [];
             });
-            
         break;
         //rolls number between 1-inpuy
         case 'roll':
