@@ -185,36 +185,35 @@ bot.on('message', (message) => {
                         osuName = user.name;
                     }
                 });
+
                 api.user.getBest(osuUser).then(user => {
                     if(user[0]){
                         var bestScores = [];
                         for(let x = 0; x < 5;x++){
                             api.beatmaps.getByBeatmapId(user[x].beatmapId).then(map =>{
                                     bestScores.push(map[0].title);
+                                    if(x == 4){
+                                        if(osuName){
+                                            var embed = new Discord.RichEmbed()
+                                            //.setTitle("This is your title, it can hold 256 characters")
+                                            .setAuthor(osuName)  
+                                            .setColor(0xff00ff)
+                                            .setDescription(bestScores[0] + "-" + user[0].pp + "\n" 
+                                                            + bestScores[1] + "-" + user[1].pp + "\n" 
+                                                            + bestScores[2] + "-" + user[2].pp + "\n" 
+                                                            + bestScores[3] + "-" + user[3].pp + "\n" 
+                                                            + bestScores[4] + "-" + user[4].pp + "\n")
+                                            .setFooter("This is the footer text, it can hold 2048 characters", "http://i.imgur.com/w1vhFSR.png")
+                                            .setThumbnail("https://puu.sh/B8elv/a46e26ad29.png")  
+                                            .setTimestamp()
+                                            message.channel.send(embed); 
+                                        }         
+                                        else{
+                                            message.channel.send("```oops looks like something went wrong! please try again```");
+                                        } 
+                                }         
                             });
                         }
-                        if(osuName){
-                            var embed = new Discord.RichEmbed()
-                            //.setTitle("This is your title, it can hold 256 characters")
-                            .setAuthor(osuName)  
-                            .setColor(0xff00ff)
-                            .setDescription(bestScores[0] + bestScores[1] + bestScores[2])
-                            .setFooter("This is the footer text, it can hold 2048 characters", "http://i.imgur.com/w1vhFSR.png")
-                            .setImage("http://i.imgur.com/yVpymuV.png")
-                            .setThumbnail("https://puu.sh/B8elv/a46e26ad29.png")  
-                            .setTimestamp()
-                            .setURL("https://discord.js.org/#/docs/main/indev/class/RichEmbed")
-                            .addField("This is a field title, it can hold 256 characters",
-                                "This is a field value, it can hold 2048 characters.")
-                            .addField("Inline Field", "They can also be inline.", true)
-                            .addBlankField(true)
-                            .addField("Inline Field 3", "You can have a maximum of 25 fields.", true);
-
-                            message.channel.send(embed); 
-                        }         
-                        else{
-                            message.channel.send("```oops looks like something went wrong! please try again```");
-                        }          
                     }
                     else{
                         message.channel.send("```User does not exist!```");
@@ -226,25 +225,22 @@ bot.on('message', (message) => {
         break;
         case 'osutest':
             var osuUser = message.content.substring(message.content.indexOf(' ') + 1);
-            var bestScores = [];
-            api.user.getBest(osuUser).then(user => {
-                for(var x = 0; x < 4; x++){
-                    api.beatmaps.getByBeatmapId(user[x].beatmapId).then(map => {
-                        bestScores.push(map[0].title);
-                        //message.channel.send(bestScores[0]);
-                    });
-                }
-                for(var x = 0;x < 4; x++){
-                    if(bestScores[x]){
-                        message.channel.send("defined");
-                    }
-                    else{
-                        message.channel.send("undefined");
-                    }
-                }
+            var beatmapIds = [];
+            api.user.getBest(osuUser).then(user => {  
+                    for(var x = 0; x < 5; x++){
+                        message.channel.send(user.length);
+                        beatmapIds.push(user[x].beatmapId);
                         
-                bestScores = [];
-            });
+                    }
+                    message.channel.send(beatmapIds[0]);
+                    message.channel.send(beatmapIds[1]);
+                    message.channel.send(beatmapIds[2]);
+                    message.channel.send(beatmapIds[3]);
+                    message.channel.send(beatmapIds[4]);
+                });
+            
+
+                
         break;
         //rolls number between 1-inpuy
         case 'roll':
