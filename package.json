@@ -5,6 +5,7 @@
   "main": "bot.js",
   "author": "Collin Li",
   "dependencies": {
+    "@types/node": "^10.5.6",
     "discord.js": "^11.3.2",
     "nodesu": "^0.6.4"
   }
