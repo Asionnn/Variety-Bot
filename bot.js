@@ -174,7 +174,70 @@ bot.on('message', (message) => {
                 message.channel.send("```usernames must be 15 characters or less!```")
             }
         break;
-        //rolls number between 1-input
+        //displays the top scores of the user
+        case 'osubest':
+        var osuUser = message.content.substring(message.content.indexOf(' ') + 1);
+            var osuString = new String(osuUser);
+            var osuName;
+            if(osuString.length < 16 && osuString.length > 0){
+                api.user.get(osuUser).then(user => {
+                    if(user){
+                        osuName = user.name;
+                    }
+                });
+                api.user.getBest(osuUser).then(user => {
+                    if(user[0]){
+                        var bestScores = [];
+                        for(let x = 0; x < 5;x++){
+                            api.beatmaps.getByBeatmapId(user[x].beatmapId).then(map =>{
+                                    bestScores.push(map[0].title);
+                            });
+                        }
+                        if(osuName){
+                            var embed = new Discord.RichEmbed()
+                            //.setTitle("This is your title, it can hold 256 characters")
+                            .setAuthor(osuName)  
+                            .setColor(0xff00ff)
+                            .setDescription(bestScores[0] + bestScores[1] + bestScores[2])
+                            .setFooter("This is the footer text, it can hold 2048 characters", "http://i.imgur.com/w1vhFSR.png")
+                            .setImage("http://i.imgur.com/yVpymuV.png")
+                            .setThumbnail("https://puu.sh/B8elv/a46e26ad29.png")  
+                            .setTimestamp()
+                            .setURL("https://discord.js.org/#/docs/main/indev/class/RichEmbed")
+                            .addField("This is a field title, it can hold 256 characters",
+                                "This is a field value, it can hold 2048 characters.")
+                            .addField("Inline Field", "They can also be inline.", true)
+                            .addBlankField(true)
+                            .addField("Inline Field 3", "You can have a maximum of 25 fields.", true);
+
+                            message.channel.send(embed); 
+                        }         
+                        else{
+                            message.channel.send("```oops looks like something went wrong! please try again```");
+                        }          
+                    }
+                    else{
+                        message.channel.send("```User does not exist!```");
+                        }});
+            } 
+            else{
+                message.channel.send("```usernames must be 15 characters or less!```");
+            }
+        break;
+        case 'osutest':
+            var osuUser = message.content.substring(message.content.indexOf(' ') + 1);
+            var bestScores = [];
+            api.user.getBest(osuUser).then(user => {
+                for(var x = 0; x < 5; x++){
+                    api.beatmaps.getByBeatmapId(user[x].beatmapId).then(map => {
+                        bestScores.push(map[0].title);
+                        message.channel.send(bestScores.length);
+                    });
+                }
+            });
+            
+        break;
+        //rolls number between 1-inpuy
         case 'roll':
             var string = message.content.substring(message.content.indexOf(' ') + 1);
             var num = parseInt(string);
