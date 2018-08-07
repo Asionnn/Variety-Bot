@@ -179,110 +179,98 @@ bot.on('message', (message) => {
             case 'osubest':
                 var osuUser = message.content.substring(message.content.indexOf(' ') + 1);
                 var osuString = new String(osuUser);
-                var osuName;
-                if (osuString.length < 16 && osuString.length > 0) {
-                    api.user.get(osuUser).then(user => {
-                        if (user) {
-                            osuName = user.name;
+                var bestScores = [];
+
+                var beatmapIds = [];
+                function getIds() {
+                    var ids = [];
+                    api.user.getBest(osuUser).then(score => {
+                        for (var x = 0; x < 5; x++) {
+                            ids.push(score[x].beatmapId);
                         }
                     });
-
-                    api.user.getBest(osuUser).then(user => {
-                        if (user[0]) {
-                            var beatmapIds = [];
-                            for (var x = 0; x < 5; x++) {
-                                beatmapIds.push(user[x].beatmapId);
-
-                            }
-                            var bestScores = [];
-                            api.beatmaps.getByBeatmapId(beatmapIds[0]).then(score => console.log(score[0].title)).then(
-                                api.beatmaps.getByBeatmapId(beatmapIds[1]).then(score => console.log(score[0].title))).then(
-                                    api.beatmaps.getByBeatmapId(beatmapIds[2]).then(score => console.log(score[0].title))).then(
-                                        api.beatmaps.getByBeatmapId(beatmapIds[3]).then(score => console.log(score[0].title))).then(
-                                            api.beatmaps.getByBeatmapId(beatmapIds[4]).then(score => console.log(score[0].title)));
-                            if (osuName && bestScores[4]) {
-                                var embed = new Discord.RichEmbed()
-                                    //.setTitle("This is your title, it can hold 256 characters")
-                                    .setAuthor(osuName)
-                                    .setColor(0xff00ff)
-                                    .setDescription(bestScores[0] + "-" + user[0].pp + "\n"
-                                        + bestScores[1] + "-" + user[1].pp + "\n"
-                                        + bestScores[2] + "-" + user[2].pp + "\n"
-                                        + bestScores[3] + "-" + user[3].pp + "\n"
-                                        + bestScores[4] + "-" + user[4].pp + "\n")
-                                    .setFooter("This is the footer text, it can hold 2048 characters", "http://i.imgur.com/w1vhFSR.png")
-                                    .setThumbnail("https://puu.sh/B8elv/a46e26ad29.png")
-                                    .setTimestamp()
-                                message.channel.send(embed);
-
-                            }
-                            else {
-                                message.channel.send("```oops looks like something went wrong! please try again```");
-                            }
-
-                            bestScores = [];
-                        }
-                        else {
-                            message.channel.send("```User does not exist!```");
-                        }
+                    return ids;
+                }
+                beatmapIds = getIds();
+                var count = 0;
+                function getScores(){
+                    api.beatmaps.getByBeatmapId(beatmapIds[count]).then(s => {
+                        bestScores.push(s[0].title);
                     });
+                    count++;
+                    if(count == 5){
+                        clearInterval(loop);
+                        count = 0;
+                    }
                 }
-                else {
-                    message.channel.send("```usernames must be 15 characters or less!```");
-                }
-                break;
+                var loop = setInterval(getScores,400);
+              
+         /*
+                    setTimeout(function () {
+                        api.beatmaps.getByBeatmapId(beatmapIds[0]).then(s => {
+                            bestScores.push(s[0].title)
+                            //message.channel.send(s[0].title);
+                        });
+                    }, 1000);
+                    setTimeout(function () {
+                        api.beatmaps.getByBeatmapId(beatmapIds[1]).then(s => {
+                            bestScores.push(s[0].title)
+                            //message.channel.send(s[0].title);
+                        });
+                    }, 1000);
+                    setTimeout(function () {
+                        api.beatmaps.getByBeatmapId(beatmapIds[2]).then(s => {
+                            bestScores.push(s[0].title)
+                            //message.channel.send(s[0].title);
+                        });
+                    }, 1000);
+                    setTimeout(function () {
+                        api.beatmaps.getByBeatmapId(beatmapIds[3]).then(s => {
+                            bestScores.push(s[0].title)
+                           // message.channel.send(s[0].title);
+                        });
+                    }, 1000);
+                    setTimeout(function () {
+                        api.beatmaps.getByBeatmapId(beatmapIds[4]).then(s => {
+                            bestScores.push(s[0].title)
+                            //message.channel.send(s[0].title);
+                        });
+                    }, 1000);
+                    */
+
+                    setTimeout(function () {
+                        var embed = new Discord.RichEmbed()
+                            //.setTitle("This is your title, it can hold 256 characters")
+                            .setAuthor(osuUser)
+                            .setColor(0xff00ff)
+                            .setDescription(bestScores[0] + "\n"
+                                + bestScores[1] + "-" + "\n"
+                                + bestScores[2] + "-" + "\n"
+                                + bestScores[3] + "-" + "\n"
+                                + bestScores[4] + "-" + "\n")
+                            .setFooter("This is the footer text, it can hold 2048 characters", "http://i.imgur.com/w1vhFSR.png")
+                            .setThumbnail("https://puu.sh/B8elv/a46e26ad29.png")
+                            .setTimestamp()
+                        message.channel.send(embed);
+                    }, 2500);
+
+                    break;
             case 'osutest':
                 var osuUser = message.content.substring(message.content.indexOf(' ') + 1);
                 var beatmapIds = [];
-                var scores = [];
-                var getScores = function () {
-                        api.user.getBest(osuUser).then(user => {
-                            for (var x = 0; x < 5; x++) {
-                                beatmapIds.push(user[x].beatmapId);
-                            }
-                        });
-                };
-                var b1 = function () {
-                    var promise = new Promise(function () {
-                        api.beatmaps.getByBeatmapId(beatmapIds[0]).then(score => scores.push(score[0]));
+                function getIds() {
+                    var ids = [];
+                    api.user.getBest(osuUser).then(score => {
+                        for (var x = 0; x < 5; x++) {
+                            ids.push(score[x].beatmapId);
+                        }
                     });
-                    return promise;
-                };
-                var b2 = function () {
-                    var promise = new Promise(function () {
-                        api.beatmaps.getByBeatmapId(beatmapIds[0]).then(score => scores.push(score[0]));
-                    });
-                    return promise;
-                };
-                var b3 = function () {
-                    var promise = new Promise(function () {
-                        api.beatmaps.getByBeatmapId(beatmapIds[0]).then(score => scores.push(score[0]));
-                    });
-                    return promise;
-                };
-                var b4 = function () {
-                    var promise = new Promise(function () {
-                        api.beatmaps.getByBeatmapId(beatmapIds[0]).then(score => scores.push(score[0]));
-                    });
-                    return promise;
-                };
-                var b5 = function () {
-                    var promise = new Promise(function () {
-                        api.beatmaps.getByBeatmapId(beatmapIds[0]).then(score => scores.push(score[0]));
-                    });
-                    return promise;
-                };
-
-                getScores();
-                b1();
-
-                console.log(beatmapIds);
-                console.log(scores);
-
-
-
-
-
+                    return ids;
+                }
+                beatmapIds = getIds();
+                setTimeout(function () {
+                    console.log(beatmapIds);
+                }, 1000);
 
 
                 break;
