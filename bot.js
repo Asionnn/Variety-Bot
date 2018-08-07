@@ -180,6 +180,8 @@ bot.on('message', (message) => {
                 var osuUser = message.content.substring(message.content.indexOf(' ') + 1);
                 var osuString = new String(osuUser);
                 var bestScores = [];
+                var ppValues = [];
+                var diffName = [];
 
                 var beatmapIds = [];
                 function getIds() {
@@ -187,74 +189,53 @@ bot.on('message', (message) => {
                     api.user.getBest(osuUser).then(score => {
                         for (var x = 0; x < 5; x++) {
                             ids.push(score[x].beatmapId);
+                            ppValues.push(score[x].pp);         
                         }
                     });
                     return ids;
                 }
+                function getPPValues() {
+                    var pp = [];
+                    api.user.getBest(osuUser).then(score => {
+                        for (var x = 0; x < 5; x++) {
+                            pp.push(score[x].pp);        
+                        }
+                    });
+                    return pp;
+                }
                 beatmapIds = getIds();
+                ppValues = getPPValues();
                 var count = 0;
-                function getScores(){
+                function getScores() {
                     api.beatmaps.getByBeatmapId(beatmapIds[count]).then(s => {
                         bestScores.push(s[0].title);
+                        diffName.push(s[0].version);
                     });
                     count++;
-                    if(count == 5){
+                    if (count == 5) {
                         clearInterval(loop);
                         count = 0;
                     }
                 }
-                var loop = setInterval(getScores,400);
-              
-         /*
-                    setTimeout(function () {
-                        api.beatmaps.getByBeatmapId(beatmapIds[0]).then(s => {
-                            bestScores.push(s[0].title)
-                            //message.channel.send(s[0].title);
-                        });
-                    }, 1000);
-                    setTimeout(function () {
-                        api.beatmaps.getByBeatmapId(beatmapIds[1]).then(s => {
-                            bestScores.push(s[0].title)
-                            //message.channel.send(s[0].title);
-                        });
-                    }, 1000);
-                    setTimeout(function () {
-                        api.beatmaps.getByBeatmapId(beatmapIds[2]).then(s => {
-                            bestScores.push(s[0].title)
-                            //message.channel.send(s[0].title);
-                        });
-                    }, 1000);
-                    setTimeout(function () {
-                        api.beatmaps.getByBeatmapId(beatmapIds[3]).then(s => {
-                            bestScores.push(s[0].title)
-                           // message.channel.send(s[0].title);
-                        });
-                    }, 1000);
-                    setTimeout(function () {
-                        api.beatmaps.getByBeatmapId(beatmapIds[4]).then(s => {
-                            bestScores.push(s[0].title)
-                            //message.channel.send(s[0].title);
-                        });
-                    }, 1000);
-                    */
+                var loop = setInterval(getScores, 400);
 
-                    setTimeout(function () {
-                        var embed = new Discord.RichEmbed()
-                            //.setTitle("This is your title, it can hold 256 characters")
-                            .setAuthor(osuUser)
-                            .setColor(0xff00ff)
-                            .setDescription(bestScores[0] + "\n"
-                                + bestScores[1] + "-" + "\n"
-                                + bestScores[2] + "-" + "\n"
-                                + bestScores[3] + "-" + "\n"
-                                + bestScores[4] + "-" + "\n")
-                            .setFooter("This is the footer text, it can hold 2048 characters", "http://i.imgur.com/w1vhFSR.png")
-                            .setThumbnail("https://puu.sh/B8elv/a46e26ad29.png")
-                            .setTimestamp()
-                        message.channel.send(embed);
-                    }, 2500);
+                setTimeout(function () {
+                    var embed = new Discord.RichEmbed()
+                        //.setTitle("This is your title, it can hold 256 characters")
+                        .setAuthor(osuUser)
+                        .setColor(0xff00ff)
+                        .setDescription(bestScores[0] + " [" + diffName[0] + "] - " + ppValues[0] + "pp\n"
+                            + bestScores[1] + " [" + diffName[1] + "] - " + ppValues[1] + "pp\n"
+                            + bestScores[2] + " [" + diffName[2] + "] - " + ppValues[2] + "pp\n"
+                            + bestScores[3] + " [" + diffName[3] + "] - " + ppValues[3] + "pp\n"
+                            + bestScores[4] + " [" + diffName[4] + "] - " + ppValues[4] + "pp\n")
+                        .setFooter("This is the footer text, it can hold 2048 characters", "http://i.imgur.com/w1vhFSR.png")
+                        .setThumbnail("https://puu.sh/B8elv/a46e26ad29.png")
+                        .setTimestamp()
+                    message.channel.send(embed);
+                }, 2500);
 
-                    break;
+                break;
             case 'osutest':
                 var osuUser = message.content.substring(message.content.indexOf(' ') + 1);
                 var beatmapIds = [];
