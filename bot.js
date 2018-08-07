@@ -45,24 +45,24 @@ bot.on('message', (message) => {
                         description: "List of commands",
                         fields: [{
                             name: "General",
-                            value: "!roll <n> - rolls a number from 1-n\n" + 
-                            "!avatar - links your avatar\n" + 
-                            "!prefix <character> - changes the prefix to the input!\n" +
-                            "!neel - special message for neel\n" + 
-                            "!rohan - special message for rohan\n" +
-                            "!alex - special message for alex\n" + 
-                            "!adam - special message for adam\n",
+                            value: "!roll <n> - rolls a number from 1-n\n" +
+                                "!avatar - links your avatar\n" +
+                                "!prefix <character> - changes the prefix to the input!\n" +
+                                "!neel - special message for neel\n" +
+                                "!rohan - special message for rohan\n" +
+                                "!alex - special message for alex\n" +
+                                "!adam - special message for adam\n",
                         },
                         {
                             name: "Pokemon section",
                             value: "!pgen - generates a random pokemon fusion from the first 151 pokemon\n" +
-                            "!pfuse <n> <n> - generates a fusion given 2 numbers from the first 493 pokemon\n",
+                                "!pfuse <n> <n> - generates a fusion given 2 numbers from the first 493 pokemon\n",
                         },
                         {
                             name: "osu! section",
-                            value: "!osupic - displays a random user uploaded osu! screenshot\n" + 
-                            "!osu <user> - displays the stats of the user!\n" +
-                            "!osubest <user> - displays the user's top 5 pp scores\n",
+                            value: "!osupic - displays a random user uploaded osu! screenshot\n" +
+                                "!osu <user> - displays the stats of the user!\n" +
+                                "!osubest <user> - displays the user's top 5 pp scores\n",
                         }
                         ],
                         timestamp: new Date(),
@@ -191,34 +191,55 @@ bot.on('message', (message) => {
                 var bestScores = [];
                 var ppValues = [];
                 var diffName = [];
+                var letters = [];
+                var modValues = [];
+                var osuName;
+
+                function getOsuName() {
+                    var name;
+                    api.user.get(osuUser).then(user => {
+                        if (user) {
+                            osuName = user.name;;
+                        }
+                    });
+                    return name;
+                }
 
                 var beatmapIds = [];
-                function getIds() {
+                function getScoreInfo() {
                     var ids = [];
                     api.user.getBest(osuUser).then(score => {
-                        for (var x = 0; x < 5; x++) {
-                            ids.push(score[x].beatmapId);
-                            ppValues.push(score[x].pp);         
+                        if (score[0]) {
+                            for (var x = 0; x < 5; x++) {
+                                ids.push(score[x].beatmapId);
+                                ppValues.push(score[x].pp);
+                                letters.push(score[x].rank);
+                                modValues.push(score[x].enabledMods);
+                            }
                         }
                     });
                     return ids;
+
                 }
                 function getPPValues() {
                     var pp = [];
                     api.user.getBest(osuUser).then(score => {
-                        for (var x = 0; x < 5; x++) {
-                            pp.push(score[x].pp);        
+                        if (score[0]) {
+                            for (var x = 0; x < 5; x++) {
+                                pp.push(score[x].pp);
+                            }
                         }
                     });
                     return pp;
                 }
-                beatmapIds = getIds();
-                ppValues = getPPValues();
+
                 var count = 0;
                 function getScores() {
                     api.beatmaps.getByBeatmapId(beatmapIds[count]).then(s => {
-                        bestScores.push(s[0].title);
-                        diffName.push(s[0].version);
+                        if (s[0]) {
+                            bestScores.push(s[0].title);
+                            diffName.push(s[0].version);
+                        }
                     });
                     count++;
                     if (count == 5) {
@@ -228,24 +249,30 @@ bot.on('message', (message) => {
                 }
                 var loop = setInterval(getScores, 400);
 
+                beatmapIds = getScoreInfo();
+                ppValues = getPPValues();
+                osuName = getOsuName();
+
                 setTimeout(function () {
-                    var embed = new Discord.RichEmbed()
-                        //.setTitle("This is your title, it can hold 256 characters")
-                        .setAuthor(osuUser,"https://puu.sh/B8elv/a46e26ad29.png")
-                        .setColor(0xff00ff)
-                        .setDescription(bestScores[0] + " [" + diffName[0] + "] - " + ppValues[0] + "pp\n"
-                            + bestScores[1] + " [" + diffName[1] + "] - " + ppValues[1] + "pp\n"
-                            + bestScores[2] + " [" + diffName[2] + "] - " + ppValues[2] + "pp\n"
-                            + bestScores[3] + " [" + diffName[3] + "] - " + ppValues[3] + "pp\n"
-                            + bestScores[4] + " [" + diffName[4] + "] - " + ppValues[4] + "pp\n")
-                        .setFooter("insert something here")
-                        .setTimestamp()
-                    message.channel.send(embed);
+                    if (bestScores[4] && osuName) {
+                        var embed = new Discord.RichEmbed()
+                            //.setTitle("This is your title, it can hold 256 characters")
+                            .setAuthor(osuName, "https://puu.sh/B8elv/a46e26ad29.png")
+                            .setColor(0xff00ff)
+                            .setDescription("#1. " + bestScores[0] + " [" + diffName[0] + "] - " + ppValues[0] + "pp\n"
+                                + "#2. " + bestScores[1] + " [" + diffName[1] + "] - " + ppValues[1] + "pp\n"
+                                + "#3. " + bestScores[2] + " [" + diffName[2] + "] - " + ppValues[2] + "pp\n"
+                                + "#4. " + bestScores[3] + " [" + diffName[3] + "] - " + ppValues[3] + "pp\n"
+                                + "#5. " + bestScores[4] + " [" + diffName[4] + "] - " + ppValues[4] + "pp\n")
+                            .setFooter("insert something here")
+                            .setTimestamp()
+                        message.channel.send(embed);
+                    }
                 }, 2500);
 
                 break;
             case 'osutest':
-                
+
                 break;
             //rolls number between 1-inpuy
             case 'roll':
