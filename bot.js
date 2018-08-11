@@ -272,6 +272,12 @@ bot.on('message', (message) => {
                             .setTimestamp()
                         message.channel.send(embed);
                     }
+                    else if(!osuName){
+                        message.channel.send("```User does not exist!```")
+                    }
+                    else{
+                        message.channel.send("```OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! A wittle fucko boingo! Please try again pls :3```")
+                    }
                 }, 2500);
                 break;
             case 'osutest':
