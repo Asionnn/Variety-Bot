@@ -253,23 +253,26 @@ bot.on('message', (message) => {
                 ppValues = getPPValues();
                 osuName = getOsuName();
 
+
                 setTimeout(function () {
                     if (bestScores[4] && osuName) {
+                        for (var x = 0; x < 5; x++) {
+                            ppValues[x] = (Math.round(ppValues[x] * 100) / 100).toFixed(2);
+                        }
                         var embed = new Discord.RichEmbed()
                             //.setTitle("This is your title, it can hold 256 characters")
                             .setAuthor(osuName, "https://puu.sh/B8elv/a46e26ad29.png")
                             .setColor(0xff00ff)
-                            .setDescription("#1. " + bestScores[0] + " [" + diffName[0] + "] - " + ppValues[0] + "pp\n"
-                                + "#2. " + bestScores[1] + " [" + diffName[1] + "] - " + ppValues[1] + "pp\n"
-                                + "#3. " + bestScores[2] + " [" + diffName[2] + "] - " + ppValues[2] + "pp\n"
-                                + "#4. " + bestScores[3] + " [" + diffName[3] + "] - " + ppValues[3] + "pp\n"
-                                + "#5. " + bestScores[4] + " [" + diffName[4] + "] - " + ppValues[4] + "pp\n")
+                            .setDescription("#1. " + bestScores[0] + " [" + diffName[0] + "] " + Nodesu.Mods["" + modValues[0]] + " - " + ppValues[0] + "pp\n"
+                                + "#2. " + bestScores[1] + " [" + diffName[1] + "] " + Nodesu.Mods["" + modValues[1]] + " - " + ppValues[1] + "pp\n"
+                                + "#3. " + bestScores[2] + " [" + diffName[2] + "] " + Nodesu.Mods["" + modValues[2]] + " - " + ppValues[2] + "pp\n"
+                                + "#4. " + bestScores[3] + " [" + diffName[3] + "] " + Nodesu.Mods["" + modValues[3]] + " - " + ppValues[3] + "pp\n"
+                                + "#5. " + bestScores[4] + " [" + diffName[4] + "] " + Nodesu.Mods["" + modValues[4]] + " - " + ppValues[4] + "pp\n")
                             .setFooter("insert something here")
                             .setTimestamp()
                         message.channel.send(embed);
                     }
                 }, 2500);
-
                 break;
             case 'osutest':
 
