@@ -193,8 +193,11 @@ bot.on('message', (message) => {
                 var diffName = [];
                 var letters = [];
                 var modValues = [];
+                var mapPercent = [];
+                var beatmapIds = [];
                 var osuName;
 
+                //gets the official osu name
                 function getOsuName() {
                     var name;
                     api.user.get(osuUser).then(user => {
@@ -205,7 +208,7 @@ bot.on('message', (message) => {
                     return name;
                 }
 
-                var beatmapIds = [];
+                //gets all the general score infos
                 function getScoreInfo() {
                     var ids = [];
                     api.user.getBest(osuUser).then(score => {
@@ -215,25 +218,20 @@ bot.on('message', (message) => {
                                 ppValues.push(score[x].pp);
                                 letters.push(score[x].rank);
                                 modValues.push(score[x].enabledMods);
+                                ppValues.push(score[x].pp);
+                                mapPercent.push((50 * score[x].count50 + 100 * score[x].count100 + 300 * score[x].count300) /
+                                    (300 * (score[x].countMiss + score[x].count50 + score[x].count100 + score[x].count300)));
+                            }
+                            for (var x = 0; x < 5; x++) {
+                                mapPercent[x] = (Math.round(mapPercent[x] * 10000) / 100).toFixed(2);
                             }
                         }
                     });
                     return ids;
 
                 }
-                function getPPValues() {
-                    var pp = [];
-                    api.user.getBest(osuUser).then(score => {
-                        if (score[0]) {
-                            for (var x = 0; x < 5; x++) {
-                                pp.push(score[x].pp);
-                            }
-                        }
-                    });
-                    return pp;
-                }
-
                 var count = 0;
+                //gets the title and diff name of song
                 function getScores() {
                     api.beatmaps.getByBeatmapId(beatmapIds[count]).then(s => {
                         if (s[0]) {
@@ -248,12 +246,10 @@ bot.on('message', (message) => {
                     }
                 }
                 var loop = setInterval(getScores, 400);
-
                 beatmapIds = getScoreInfo();
-                ppValues = getPPValues();
                 osuName = getOsuName();
 
-
+                //embed to diplay scores
                 setTimeout(function () {
                     if (bestScores[4] && osuName) {
                         for (var x = 0; x < 5; x++) {
@@ -263,25 +259,24 @@ bot.on('message', (message) => {
                             //.setTitle("This is your title, it can hold 256 characters")
                             .setAuthor(osuName, "https://puu.sh/B8elv/a46e26ad29.png")
                             .setColor(0xff00ff)
-                            .setDescription("#1. " + bestScores[0] + " [" + diffName[0] + "] " + Nodesu.Mods["" + modValues[0]] + " - " + ppValues[0] + "pp\n"
-                                + "#2. " + bestScores[1] + " [" + diffName[1] + "] " + Nodesu.Mods["" + modValues[1]] + " - " + ppValues[1] + "pp\n"
-                                + "#3. " + bestScores[2] + " [" + diffName[2] + "] " + Nodesu.Mods["" + modValues[2]] + " - " + ppValues[2] + "pp\n"
-                                + "#4. " + bestScores[3] + " [" + diffName[3] + "] " + Nodesu.Mods["" + modValues[3]] + " - " + ppValues[3] + "pp\n"
-                                + "#5. " + bestScores[4] + " [" + diffName[4] + "] " + Nodesu.Mods["" + modValues[4]] + " - " + ppValues[4] + "pp\n")
+                            .setDescription("#1. " + bestScores[0] + " [" + diffName[0] + "] " + Nodesu.Mods["" + modValues[0]] + " | " + mapPercent[0] + "% - " + ppValues[0] + "pp\n"
+                                + "#2. " + bestScores[1] + " [" + diffName[1] + "] " + Nodesu.Mods["" + modValues[1]] + " | " + mapPercent[1] + "% - " + ppValues[1] + "pp\n"
+                                + "#3. " + bestScores[2] + " [" + diffName[2] + "] " + Nodesu.Mods["" + modValues[2]] + " | " + mapPercent[2] + "% - " + ppValues[2] + "pp\n"
+                                + "#4. " + bestScores[3] + " [" + diffName[3] + "] " + Nodesu.Mods["" + modValues[3]] + " | " + mapPercent[3] + "% - " + ppValues[3] + "pp\n"
+                                + "#5. " + bestScores[4] + " [" + diffName[4] + "] " + Nodesu.Mods["" + modValues[4]] + " | " + mapPercent[4] + "% - " + ppValues[4] + "pp\n")
                             .setFooter("insert something here")
                             .setTimestamp()
                         message.channel.send(embed);
                     }
-                    else if(!osuName){
+                    else if (!osuName) {
                         message.channel.send("```User does not exist!```")
                     }
-                    else{
+                    else {
                         message.channel.send("```OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! A wittle fucko boingo! Please try again pls :3```")
                     }
                 }, 2500);
                 break;
             case 'osutest':
-
                 break;
             //rolls number between 1-inpuy
             case 'roll':
