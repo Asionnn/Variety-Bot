@@ -220,7 +220,6 @@ bot.on('message', (message) => {
                                 ppValues.push(score[x].pp);
                                 letters.push(score[x].rank);
                                 modValues.push(score[x].enabledMods);
-                                ppValues.push(score[x].pp);
                                 mapPercent.push((50 * score[x].count50 + 100 * score[x].count100 + 300 * score[x].count300) /
                                     (300 * (score[x].countMiss + score[x].count50 + score[x].count100 + score[x].count300)));
                                 switch(score[x].rank){
