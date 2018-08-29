@@ -196,6 +196,7 @@ bot.on('message', (message) => {
                 var mapPercent = [];
                 var beatmapIds = [];
                 var setIds = [];
+                var rank = [];
                 var osuName;
 
                 //gets the official osu name
@@ -222,6 +223,19 @@ bot.on('message', (message) => {
                                 ppValues.push(score[x].pp);
                                 mapPercent.push((50 * score[x].count50 + 100 * score[x].count100 + 300 * score[x].count300) /
                                     (300 * (score[x].countMiss + score[x].count50 + score[x].count100 + score[x].count300)));
+                                switch(score[x].rank){
+                                    case "X":
+                                        rank.push("SS");
+                                    break;
+                                    case "XH":
+                                        rank.push("SS");
+                                    break;
+                                    case "SH":
+                                        rank.push("S");
+                                    break;
+                                    default:
+                                        rank.push(score[x].rank);
+                                }
                             }
                             for (var x = 0; x < 5; x++) {
                                 mapPercent[x] = (Math.round(mapPercent[x] * 10000) / 100).toFixed(2);
@@ -261,12 +275,12 @@ bot.on('message', (message) => {
                             //.setTitle("This is your title, it can hold 256 characters")
                             .setAuthor(osuName, "https://puu.sh/B8elv/a46e26ad29.png")
                             .setColor(0xff00ff)
-                            .setDescription("**#1.** __***[" + bestScores[0] + " [" + diffName[0] + "]](https://osu.ppy.sh/beatmapsets/" + setIds[0] + "#osu" + beatmapIds[0] + ")***__ + **"  + Nodesu.Mods["" + modValues[0]] + "** \n\xa0\xa0\xa0\xa0\xa0\xa0\xa0> *" + mapPercent[0] + "% - " + ppValues[0] + "pp*\n"
-                                + "**#2.** __***[" + bestScores[1] + " [" + diffName[1] + "]](https://osu.ppy.sh/beatmapsets/" + setIds[1] + "#osu" + beatmapIds[1] + ")***__ + **"  + Nodesu.Mods["" + modValues[1]] + "** \n\xa0\xa0\xa0\xa0\xa0\xa0\xa0> *" + mapPercent[1] + "% | " + ppValues[1] + "pp*\n"
-                                + "**#3.** __***[" + bestScores[2] + " [" + diffName[2] + "]](https://osu.ppy.sh/beatmapsets/" + setIds[2] + "#osu" + beatmapIds[2] + ")***__ + **"  + Nodesu.Mods["" + modValues[2]] + "** \n\xa0\xa0\xa0\xa0\xa0\xa0\xa0> *" + mapPercent[2] + "% | " + ppValues[2] + "pp*\n"
-                                + "**#4.** __***[" + bestScores[3] + " [" + diffName[3] + "]](https://osu.ppy.sh/beatmapsets/" + setIds[3] + "#osu" + beatmapIds[3] + ")***__ + **"  + Nodesu.Mods["" + modValues[3]] + "** \n\xa0\xa0\xa0\xa0\xa0\xa0\xa0> *" + mapPercent[3] + "% | " + ppValues[3] + "pp*\n"
-                                + "**#5.** __***[" + bestScores[4] + " [" + diffName[4] + "]](https://osu.ppy.sh/beatmapsets/" + setIds[4] + "#osu" + beatmapIds[4] + ")***__ + **"  + Nodesu.Mods["" + modValues[4]] + "** \n\xa0\xa0\xa0\xa0\xa0\xa0\xa0> *" + mapPercent[4] + "% | " + ppValues[4] + "pp*\n")
-                            .setFooter("insert something here")
+                            .setDescription("**#1.** __***[" + bestScores[0] + " [" + diffName[0] + "]](https://osu.ppy.sh/beatmapsets/" + setIds[0] + "#osu" + beatmapIds[0] + ")***__ + **" + Nodesu.Mods["" + modValues[0]] + "** \n\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0> **" + rank[0] + "** | *" + mapPercent[0] + "% - " + ppValues[0] + "pp*\n"
+                                + "**#2.** __***[" + bestScores[1] + " [" + diffName[1] + "]](https://osu.ppy.sh/beatmapsets/" + setIds[1] + "#osu" + beatmapIds[1] + ")***__ + **" + Nodesu.Mods["" + modValues[1]] + "** \n\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0> **" + rank[1] + "** | *" + mapPercent[1] + "% | " + ppValues[1] + "pp*\n"
+                                + "**#3.** __***[" + bestScores[2] + " [" + diffName[2] + "]](https://osu.ppy.sh/beatmapsets/" + setIds[2] + "#osu" + beatmapIds[2] + ")***__ + **" + Nodesu.Mods["" + modValues[2]] + "** \n\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0> **" + rank[2] + "** | *" + mapPercent[2] + "% | " + ppValues[2] + "pp*\n"
+                                + "**#4.** __***[" + bestScores[3] + " [" + diffName[3] + "]](https://osu.ppy.sh/beatmapsets/" + setIds[3] + "#osu" + beatmapIds[3] + ")***__ + **" + Nodesu.Mods["" + modValues[3]] + "** \n\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0> **" + rank[3] + "** | *" + mapPercent[3] + "% | " + ppValues[3] + "pp*\n"
+                                + "**#5.** __***[" + bestScores[4] + " [" + diffName[4] + "]](https://osu.ppy.sh/beatmapsets/" + setIds[4] + "#osu" + beatmapIds[4] + ")***__ + **" + Nodesu.Mods["" + modValues[4]] + "** \n\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0> **" + rank[4] + "** | *" + mapPercent[4] + "% | " + ppValues[4] + "pp*\n")
+                            .setFooter("")
                             .setTimestamp()
                         message.channel.send(embed);
                     }
@@ -278,8 +292,8 @@ bot.on('message', (message) => {
                     }
                 }, 2500);
                 break;
+            //this case is used to test osu! cases
             case 'osutest':
-            
             //rolls number between 1-inpuy
             case 'roll':
                 var string = message.content.substring(message.content.indexOf(' ') + 1);
