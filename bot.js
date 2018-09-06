@@ -163,12 +163,19 @@ bot.on('message', (message) => {
                                     url: "https://osu.ppy.sh/users/" + user.name,
                                     //description: "Stats",
                                     fields: [{
-                                        name: "Profile",
-                                        value: "Rank: #" + user.ppRank.toLocaleString() + "\nPP: " + user.pp.toLocaleString() + "\nAccuracy: " + user.accuracy.toFixed(2) + "%\nPlaycount: " + user.playcount.toLocaleString(),
+                                        name: "**Profile**",
+                                        value: "**Rank: ** #" + user.ppRank.toLocaleString() 
+                                        + "\n **PP: ** " + user.pp.toLocaleString() 
+                                        + "\n **Accuracy: ** " + user.accuracy.toFixed(2) 
+                                        + "%\n **Playcount: ** " + user.playcount.toLocaleString(),
                                     },
                                     {
-                                        name: "Score & Ranks",
-                                        value: "Total score: " + user.totalScore.toLocaleString() + "\nRanked score: " + user.rankedScore.toLocaleString() + "\nSS-ranks: " + user.countRankSS.toLocaleString() + "\nS-ranks: " + user.countRankS.toLocaleString() + "\nA-ranks: " + user.countRankA.toLocaleString(),
+                                        name: "**Score & Ranks**",
+                                        value: "**Total score: ** " + user.totalScore.toLocaleString() 
+                                        + "\n **Ranked score: ** " + user.rankedScore.toLocaleString() 
+                                        + "\n **SS-ranks: ** " + user.countRankSS.toLocaleString() 
+                                        + "\n **S-ranks: ** " + user.countRankS.toLocaleString() 
+                                        + "\n **A-ranks: ** " + user.countRankA.toLocaleString(),
                                     }
                                     ],
 
@@ -197,7 +204,9 @@ bot.on('message', (message) => {
                 var beatmapIds = [];
                 var setIds = [];
                 var rank = [];
+                var userID;
                 var osuName;
+
 
                 //gets the official osu name
                 function getOsuName() {
@@ -205,6 +214,7 @@ bot.on('message', (message) => {
                     api.user.get(osuUser).then(user => {
                         if (user) {
                             osuName = user.name;;
+                            userID = user.userId;
                         }
                     });
                     return name;
@@ -226,16 +236,16 @@ bot.on('message', (message) => {
                                     (300 * (score[x].countMiss + score[x].count50 + score[x].count100 + score[x].count300)));
 
                                 //asigns the appropriate ranking letters
-                                switch(score[x].rank){
+                                switch (score[x].rank) {
                                     case "X":
                                         rank.push("SS");
-                                    break;
+                                        break;
                                     case "XH":
                                         rank.push("SS");
-                                    break;
+                                        break;
                                     case "SH":
                                         rank.push("S");
-                                    break;
+                                        break;
                                     default:
                                         rank.push(score[x].rank);
                                 }
@@ -254,7 +264,7 @@ bot.on('message', (message) => {
                     api.beatmaps.getByBeatmapId(beatmapIds[count]).then(s => {
                         if (s[0]) {
                             let checkAsterisk = s[0].title;
-                            checkAsterisk = checkAsterisk.replace("*"," "); // any asterisks in the title will break the embed title
+                            checkAsterisk = checkAsterisk.replace("*", " "); // any asterisks in the title will break the embed title
                             bestScores.push(checkAsterisk);
                             diffName.push(s[0].version);
                             setIds.push(s[0].setId);
@@ -277,7 +287,6 @@ bot.on('message', (message) => {
                             ppValues[x] = (Math.round(ppValues[x] * 100) / 100).toFixed(2);
                         }
                         var embed = new Discord.RichEmbed()
-                            //.setTitle("This is your title, it can hold 256 characters")
                             .setAuthor(osuName, "https://puu.sh/B8elv/a46e26ad29.png")
                             .setColor(0xff00ff)
                             .setDescription("**#1.** __***[" + bestScores[0] + " [" + diffName[0] + "]](https://osu.ppy.sh/beatmapsets/" + setIds[0] + "#osu" + beatmapIds[0] + ")***__ + **" + Nodesu.Mods["" + modValues[0]] + "** \n\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0> **" + rank[0] + "** | *" + mapPercent[0] + "%* | *" + ppValues[0] + "pp*\n"
@@ -298,8 +307,8 @@ bot.on('message', (message) => {
                 }, 2500);
                 break;
             //this case is used to test osu! cases
-            case 'osutest':     
-            break
+            case 'osutest':
+                break
             //rolls number between 1-inpuy
             case 'roll':
                 var string = message.content.substring(message.content.indexOf(' ') + 1);
