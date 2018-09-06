@@ -220,8 +220,12 @@ bot.on('message', (message) => {
                                 ppValues.push(score[x].pp);
                                 letters.push(score[x].rank);
                                 modValues.push(score[x].enabledMods);
+
+                                //pp formula
                                 mapPercent.push((50 * score[x].count50 + 100 * score[x].count100 + 300 * score[x].count300) /
                                     (300 * (score[x].countMiss + score[x].count50 + score[x].count100 + score[x].count300)));
+
+                                //asigns the appropriate ranking letters
                                 switch(score[x].rank){
                                     case "X":
                                         rank.push("SS");
@@ -249,7 +253,9 @@ bot.on('message', (message) => {
                 function getScores() {
                     api.beatmaps.getByBeatmapId(beatmapIds[count]).then(s => {
                         if (s[0]) {
-                            bestScores.push(s[0].title);
+                            let checkAsterisk = s[0].title;
+                            checkAsterisk = checkAsterisk.replace("*"," "); // any asterisks in the title will break the embed title
+                            bestScores.push(checkAsterisk);
                             diffName.push(s[0].version);
                             setIds.push(s[0].setId);
                         }
