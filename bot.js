@@ -13,6 +13,8 @@ bot.on('ready', function () {
 });
 var prefix = '!';
 bot.on('message', (message) => {
+    var number;
+    var gnum;
     //checks to see if the first character is the token
     if (message.content.charAt(0) == prefix) {
         //uses the command after the token to switch
@@ -164,18 +166,18 @@ bot.on('message', (message) => {
                                     //description: "Stats",
                                     fields: [{
                                         name: "**Profile**",
-                                        value: "**Rank: ** #" + user.ppRank.toLocaleString() 
-                                        + "\n **PP: ** " + user.pp.toLocaleString() 
-                                        + "\n **Accuracy: ** " + user.accuracy.toFixed(2) 
-                                        + "%\n **Playcount: ** " + user.playcount.toLocaleString(),
+                                        value: "**Rank: ** #" + user.ppRank.toLocaleString()
+                                            + "\n **PP: ** " + user.pp.toLocaleString()
+                                            + "\n **Accuracy: ** " + user.accuracy.toFixed(2)
+                                            + "%\n **Playcount: ** " + user.playcount.toLocaleString(),
                                     },
                                     {
                                         name: "**Score & Ranks**",
-                                        value: "**Total score: ** " + user.totalScore.toLocaleString() 
-                                        + "\n **Ranked score: ** " + user.rankedScore.toLocaleString() 
-                                        + "\n **SS-ranks: ** " + user.countRankSS.toLocaleString() 
-                                        + "\n **S-ranks: ** " + user.countRankS.toLocaleString() 
-                                        + "\n **A-ranks: ** " + user.countRankA.toLocaleString(),
+                                        value: "**Total score: ** " + user.totalScore.toLocaleString()
+                                            + "\n **Ranked score: ** " + user.rankedScore.toLocaleString()
+                                            + "\n **SS-ranks: ** " + user.countRankSS.toLocaleString()
+                                            + "\n **S-ranks: ** " + user.countRankS.toLocaleString()
+                                            + "\n **A-ranks: ** " + user.countRankA.toLocaleString(),
                                     }
                                     ],
 
@@ -319,6 +321,40 @@ bot.on('message', (message) => {
                 }
                 else {
                     message.channel.send("```Enter a number!```");
+                }
+                break;
+            case 'guess-start':
+                var string = message.content.substring(message.content.indexOf(' ') + 1);
+                number = parseInt(string);
+                if (number) {
+                    gnum = Math.floor(Math.random() * number) + 1;
+                    var embed = new Discord.RichEmbed()
+                        .setColor(0x0fff)
+                        .setDescription("Guessing game started with an input of ```" + gnum + "``` \n use !guess <number> to start guessing")
+                        .setTimestamp();
+                    message.channel.send(embed);
+                }
+                else {
+                    message.channel.send("```Enter a number!```");
+                }
+                break;
+            case 'guess':
+                var string = message.content.substring(message.content.indexOf(' ') + 1);
+                number = parseInt(string);
+                if (number) {
+                    var embed = new Discord.RichEmbed().setColor(0x0fff).setTimestamp();
+                    if (gnum > number) {
+                        embed.setDescription("The number is greater than ```" + number + "```");
+                        message.channel.send(embed);
+                    }
+                    else if (gnum < number) {
+                        embed.setDescription("The number is less than ```" + number + "```");
+                        message.channel.send(embed);
+                    }
+                    else {
+                        embed.setDescription("Correct! The number was ```" + gnum + "```");
+                        message.channel.send(embed);
+                    }
                 }
                 break;
         } //end switch for switch spaces
