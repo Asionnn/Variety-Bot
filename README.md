@@ -1,4 +1,4 @@
 # my-Discord-bot
 >currently working on osu! functionality
 
->next is fortnite functionality
+>on hiatus until I have free time from college
